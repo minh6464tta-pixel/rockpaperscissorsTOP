@@ -2,9 +2,10 @@
 //Return a Randomly generated number from 1 to 3
 
 function getComputerChoice() {
-  // let choice =  Math.floor(Math.random() * 3 + 1);
-  let choice = 1;
-  return choice;
+  let choice =  Math.floor(Math.random() * 3 + 1);
+  if(choice == 1) return "rock";
+  if(choice == 2) return "paper";
+  if(choice == 3) return "scissors";
 }
 
 //2, Logic for Human choice
@@ -34,50 +35,37 @@ function playRound(computerChoice, humanChoice) {
     console.log("Draw! Go Again");
     playRound(getComputerChoice(), getHumanChoice());
   }
-  else if(computerChoice == 1 && humanChoice == "paper") {
-    console.log("Computer rock vs Human paper")
-    console.log("Human wins");
-    humanScore++;
-    console.log(`Computer: ${computerScore}, Human: ${humanScore}`);
-  }
-  else if(computerChoice == 1 && humanChoice == "scissors") {
-    console.log("Computer rock vs Human scissors")
-    console.log("Computer wins");
+  else if(
+    computerChoice == "rock" && humanChoice == "scissors" ||
+    computerChoice == "scissors" && humanChoice == "paper" ||
+    computerChoice == "paper" && humanChoice == "rock"
+  ) {
     computerScore++;
-    console.log(`Computer: ${computerScore}, Human: ${humanScore}`);  
+    console.log("Computer wins!");
   }
-  else if(computerChoice == 2 && humanChoice == "scissors") {
-    console.log("Computer paper vs Human scissors")
-    console.log("Human wins");
+  else if(
+    humanChoice == "rock" && computerChoice == "scissors" ||
+    humanChoice == "scissors" && computerChoice == "paper" ||
+    humanChoice == "paper" && computerChoice == "rock"   
+  ) {
     humanScore++;
-    console.log(`Computer: ${computerScore}, Human: ${humanScore}`);    
-  } 
-  else if(computerChoice == 2 && humanChoice == "rock") {
-    console.log("Computer paper vs Human rock")
-    console.log("Computer wins");
-    computerScore++;
-    console.log(`Computer: ${computerScore}, Human: ${humanScore}`); 
-  } 
-  else if(computerChoice == 3 && humanChoice == "rock") {
-    console.log("Computer scissors vs Human rock")
-    console.log("Human wins");
-    humanScore++;
-    console.log(`Computer: ${computerScore}, Human: ${humanScore}`);      
+    console.log("Human wins!");
   }
-  else if(computerChoice == 3 && humanChoice == "paper") {
-    console.log("Computer scissors vs Human paper")
-    console.log("Computer wins");
-    computerScore++;
-    console.log(`Computer: ${computerScore}, Human: ${humanScore}`);  
-  }
-  return; 
-}
 
-playRound(getComputerChoice(), getHumanChoice());
+  console.log(`Computer: ${computerScore}, Human: ${humanScore}`);
+}
 
 // 5. Logic for playing a game (5 rounds)
 // Loop 4 until one of the score reaches 3
 
+function playGame() {
+  while(humanScore < 3 && computerScore < 3) {
+    playRound(getComputerChoice(), getHumanChoice());
+  }
 
+  let winner = humanScore > computerScore ? "Human":"Computer";
+  console.log(`Game over! Winner is: ${winner}`)
+}
 
+playGame();
 
