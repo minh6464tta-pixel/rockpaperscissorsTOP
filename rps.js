@@ -1,12 +1,9 @@
 //1. Logic for computer choice
 //Return a Randomly generated number from 1 to 3
 
-function computerChoice() {
+function getComputerChoice() {
   let choice =  Math.floor(Math.random() * 3 + 1);
   return choice;
-}
-for (i = 0; i <= 10; i++) {
-console.log(computerChoice());
 }
 
 //2, Logic for Human choice
@@ -14,6 +11,11 @@ console.log(computerChoice());
 //Turn the string into all lower case
 //Return that value
 
+function getHumanChoice() {
+  let choice = prompt("Please enter rock, paper or scissors: ");
+  choice = choice.toLowerCase();
+  return choice;
+}
 //3. Logic for keeping track of score
 //Make 2 global variables of int type with initial value 1
 // Increment the score after a side won
