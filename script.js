@@ -21,7 +21,7 @@ function getHumanChoice() {
 // 3. Logic for keeping track of score
 // Make 2 global variables of int type with initial value 1
 // Increment the score after a side won
-
+let isGameOver = 0;
 let humanScore = 0;
 let computerScore = 0;
 
@@ -67,21 +67,33 @@ function playRound(computerChoice, humanChoice) {
 // 5. Logic for playing a game (5 rounds)
 // Loop 4 until one of the score reaches 3
 
-// function playGame() {
-//   while(humanScore < 3 && computerScore < 3) {
-//     playRound(getComputerChoice(), getHumanChoice());
-//   }
+function endGame() {
+  let winner = humanScore > computerScore ? "Human":"Computer";
+  let gameoverPanel = document.querySelector(".gameover-panel");
+  gameoverPanel.textContent = `Game over. Winner: ${winner}. Final score: ${humanScore} - ${computerScore}`;
+  document.body.appendChild(gameoverPanel);
+  isGameOver = 1;
+}
 
-//   let winner = humanScore > computerScore ? "Human":"Computer";
-//   console.log(`Game over! Winner is: ${winner}`)
-// }
+function displayScore() {
+  let humanScoreDisplay = document.querySelector(".human-score");
+  let computerScoreDisplay = document.querySelector(".computer-score");
 
-// playGame();
-
+  humanScoreDisplay.textContent = humanScore;
+  computerScoreDisplay.textContent = computerScore;
+}
 
 let buttonPanel = document.querySelector(".button-panel");
 buttonPanel.addEventListener('click', (event) => {
-  let target = event.target;
-  playRound(getComputerChoice(), target.id);
+  
+  if (!isGameOver){
+    let target = event.target;
+    playRound(getComputerChoice(), target.id);
+
+    if (computerScore == 5 || humanScore == 5) {
+      endGame();
+    }
+
+    displayScore();
   }
-)
+})
