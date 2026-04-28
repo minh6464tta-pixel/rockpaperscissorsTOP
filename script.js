@@ -31,9 +31,18 @@ let computerScore = 0;
 //     if draw, call 4 again
 
 function playRound(computerChoice, humanChoice) {
+  
+  let resultPanel = document.querySelector(".result-panel");
+  resultPanel.innerHTML = '';
+
+  let choicesDisplay = document.createElement('p');
+  choicesDisplay.textContent = `Computer: ${computerChoice}, Human: ${humanChoice}`;
+  resultPanel.appendChild(choicesDisplay);
+
+  let result = document.createElement('p');
+  
   if(computerChoice == humanChoice) {
-    console.log("Draw! Go Again");
-    playRound(getComputerChoice(), getHumanChoice());
+    result.textContent = "Draw! Go again";
   }
   else if(
     computerChoice == "rock" && humanChoice == "scissors" ||
@@ -41,7 +50,7 @@ function playRound(computerChoice, humanChoice) {
     computerChoice == "paper" && humanChoice == "rock"
   ) {
     computerScore++;
-    console.log("Computer wins!");
+    result.textContent = `Computer's ${computerChoice} beats Human's ${humanChoice}. Computer Wins!`;
   }
   else if(
     humanChoice == "rock" && computerChoice == "scissors" ||
@@ -49,23 +58,30 @@ function playRound(computerChoice, humanChoice) {
     humanChoice == "paper" && computerChoice == "rock"   
   ) {
     humanScore++;
-    console.log("Human wins!");
+    result.textContent = `Human's ${humanChoice} beats Computer's ${computerChoice}. Human Wins!`;
   }
 
-  console.log(`Computer: ${computerScore}, Human: ${humanScore}`);
+  resultPanel.appendChild(result);
 }
 
 // 5. Logic for playing a game (5 rounds)
 // Loop 4 until one of the score reaches 3
 
-function playGame() {
-  while(humanScore < 3 && computerScore < 3) {
-    playRound(getComputerChoice(), getHumanChoice());
+// function playGame() {
+//   while(humanScore < 3 && computerScore < 3) {
+//     playRound(getComputerChoice(), getHumanChoice());
+//   }
+
+//   let winner = humanScore > computerScore ? "Human":"Computer";
+//   console.log(`Game over! Winner is: ${winner}`)
+// }
+
+// playGame();
+
+
+let buttonPanel = document.querySelector(".button-panel");
+buttonPanel.addEventListener('click', (event) => {
+  let target = event.target;
+  playRound(getComputerChoice(), target.id);
   }
-
-  let winner = humanScore > computerScore ? "Human":"Computer";
-  console.log(`Game over! Winner is: ${winner}`)
-}
-
-playGame();
-
+)
